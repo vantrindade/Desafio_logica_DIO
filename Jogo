@@ -1,0 +1,83 @@
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+class Heroi {
+    constructor(nome, idade, tipo) {
+        this.nome = nome;
+        this.idade = idade;
+        this.tipo = tipo;
+    }
+
+    atacar() {
+        let ataque;
+        
+        switch (this.tipo.toLowerCase()) {
+            case "mago":
+                ataque = "usou magia";
+                break;
+            case "guerreiro":
+                ataque = "usou espada";
+                break;
+            case "monge":
+                ataque = "usou artes marciais";
+                break;
+            case "ninja":
+                ataque = "usou shuriken";
+                break;
+            default:
+                ataque = "usou um ataque básico";
+                break;
+        }
+        
+        console.log(`\n⚔️  O ${this.tipo} atacou usando ${ataque} ⚔️\n`);
+    }
+    
+    exibirInfo() {
+        console.log(`
+📜 INFORMAÇÕES DO HERÓI:
+   • Nome: ${this.nome}
+   • Idade: ${this.idade}
+   • Tipo: ${this.tipo}
+        `);
+    }
+}
+
+function criarHeroi() {
+    console.log("\n🎮 CRIAÇÃO DE HERÓI 🎮");
+    
+    rl.question("Digite o nome do herói: ", (nome) => {
+        rl.question("Digite a idade do herói: ", (idade) => {
+            console.log("\nTipos disponíveis:");
+            console.log("1 - Mago");
+            console.log("2 - Guerreiro");
+            console.log("3 - Monge");
+            console.log("4 - Ninja");
+            
+            rl.question("Escolha o tipo (1-4): ", (opcao) => {
+                let tipo;
+                switch(opcao) {
+                    case "1": tipo = "mago"; break;
+                    case "2": tipo = "guerreiro"; break;
+                    case "3": tipo = "monge"; break;
+                    case "4": tipo = "ninja"; break;
+                    default: 
+                        console.log("Opção inválida! Usando tipo padrão: guerreiro");
+                        tipo = "guerreiro";
+                }
+                
+                const heroi = new Heroi(nome, parseInt(idade), tipo);
+                heroi.exibirInfo();
+                heroi.atacar();
+                
+                rl.close();
+            });
+        });
+    });
+}
+
+// Executa o programa interativo
+criarHeroi();
